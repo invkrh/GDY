@@ -9,4 +9,9 @@
     <string name="new_game">Start a new game</string>
     <string name="resume_game">Resume an old game</string>
     <string name="title_activity_game_setting">GameSettingActivity</string>
+
+    <string name="num_player">Player number :</string>
+    <string name="max_points">Max points :</string>
+    <string name="init_points">Initial points :</string>
+
 </resources>

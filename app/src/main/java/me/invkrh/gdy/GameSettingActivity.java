@@ -6,24 +6,34 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.NumberPicker;
 
-
 public class GameSettingActivity extends ActionBarActivity {
 
+    private void setNumberPicker(int id, int min, int max, String[] displayedValues) {
+        NumberPicker np = (NumberPicker) findViewById(id);
+        np.setDisplayedValues(displayedValues);
+        setNumberPicker(id, min, max);
+    }
+
+    private void setNumberPicker(int id, int min, int max) {
+        NumberPicker np = (NumberPicker) findViewById(id);
+        np.setMinValue(min);
+        np.setMaxValue(max);
+        np.setValue(min);
+        np.setWrapSelectorWheel(true);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_setting);
 
-        NumberPicker np = (NumberPicker) findViewById(R.id.numberPicker);
+        String[] maxValueArr = {"20", "30", "40", "50"};
+        String[] initValueArr = {"50", "60", "70", "80", "90", "100"};
 
-        np.setValue(4);
-        np.setMinValue(2);
-        np.setMaxValue(6);
-        np.setWrapSelectorWheel(true);
-
+        setNumberPicker(R.id.np_num_player, 2, 6);
+        setNumberPicker(R.id.np_max_point, 0, 3, maxValueArr);
+        setNumberPicker(R.id.np_init_point, 0, 5, initValueArr);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
