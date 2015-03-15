@@ -1,8 +1,10 @@
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clickable="false"
+    android:baselineAligned="false"
+    android:orientation="horizontal"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -10,65 +12,83 @@
     tools:context="me.invkrh.gdy.GameSettingActivity">
 
 
-    <TableRow
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_gravity="center_vertical"
+        android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
 
         <TextView
-            android:id="@+id/tv_num_player"
+            android:id="@+id/num_player_tv"
+            android:layout_marginTop="80dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
+            android:layout_gravity="center_horizontal"
             android:text="@string/num_player" />
 
         <NumberPicker
-            android:id="@+id/np_num_player"
-            android:layout_marginLeft="80dp"
+            android:id="@+id/num_player_np"
+            android:layout_marginTop="40dp"
+            android:layout_gravity="center_horizontal"
             android:descendantFocusability="blocksDescendants"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-    </TableRow>
+    </LinearLayout>
 
-    <TableRow
-        android:layout_marginTop="20dp"
+    <LinearLayout
+        android:layout_weight="1"
+        android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
 
         <TextView
-            android:id="@+id/tv_max_point"
+            android:id="@+id/max_point_tv"
+            android:layout_marginTop="80dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
+            android:layout_gravity="center_horizontal"
             android:text="@string/max_points" />
 
         <NumberPicker
-            android:id="@+id/np_max_point"
-            android:layout_marginLeft="80dp"
+            android:id="@+id/max_point_np"
+            android:layout_marginTop="40dp"
+            android:layout_gravity="center_horizontal"
             android:descendantFocusability="blocksDescendants"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-    </TableRow>
 
-    <TableRow
-        android:layout_marginTop="20dp"
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:text="@string/next"
+            android:id="@+id/go_to_player_settings_btn" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
 
         <TextView
             android:id="@+id/tv_init_point"
+            android:layout_marginTop="80dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
+            android:layout_gravity="center_horizontal"
             android:text="@string/init_points" />
 
         <NumberPicker
             android:id="@+id/np_init_point"
-            android:layout_marginLeft="80dp"
+            android:layout_marginTop="40dp"
+            android:layout_gravity="center_horizontal"
             android:descendantFocusability="blocksDescendants"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-    </TableRow>
+    </LinearLayout>
 
-</TableLayout>
+</LinearLayout>
 
 

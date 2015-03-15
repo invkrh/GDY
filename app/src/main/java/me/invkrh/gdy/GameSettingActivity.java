@@ -1,24 +1,28 @@
 package me.invkrh.gdy;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.NumberPicker;
+
+import java.util.Arrays;
 
 public class GameSettingActivity extends ActionBarActivity {
 
-    private void setNumberPicker(int id, int min, int max, String[] displayedValues) {
+    private void setNumberPicker(int id, int value, String[] displayedValues) {
+        int valueIdx = Arrays.asList(displayedValues).indexOf(Integer.toString(value));
+        int min = 0;
+        int max = displayedValues.length - 1;
+
         NumberPicker np = (NumberPicker) findViewById(id);
         np.setDisplayedValues(displayedValues);
-        setNumberPicker(id, min, max);
-    }
-
-    private void setNumberPicker(int id, int min, int max) {
-        NumberPicker np = (NumberPicker) findViewById(id);
         np.setMinValue(min);
         np.setMaxValue(max);
-        np.setValue(min);
+        np.setValue(valueIdx);
         np.setWrapSelectorWheel(true);
     }
 
@@ -27,12 +31,25 @@ public class GameSettingActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_setting);
 
+        // TODO: get SharedPreference
+
+        String[] nbPlayerArr = {"2", "3", "4", "5", "6"};
         String[] maxValueArr = {"20", "30", "40", "50"};
         String[] initValueArr = {"50", "60", "70", "80", "90", "100"};
 
-        setNumberPicker(R.id.np_num_player, 2, 6);
-        setNumberPicker(R.id.np_max_point, 0, 3, maxValueArr);
-        setNumberPicker(R.id.np_init_point, 0, 5, initValueArr);
+        setNumberPicker(R.id.num_player_np, 4, nbPlayerArr);
+        setNumberPicker(R.id.max_point_np, 20, maxValueArr);
+        setNumberPicker(R.id.np_init_point, 50, initValueArr);
+
+        Button startButton = (Button) findViewById(R.id.go_to_player_settings_btn);
+        final Intent intent = new Intent(this, GameSettingActivity.class);
+
+        startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
