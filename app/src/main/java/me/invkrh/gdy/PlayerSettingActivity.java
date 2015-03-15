@@ -1,42 +1,36 @@
 package me.invkrh.gdy;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
+import android.widget.TextView;
 
 
-public class MainActivity extends ActionBarActivity {
+public class PlayerSettingActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_player_setting);
 
-        this.getSharedPreferences(
-                getString(R.string.gdy_file_key), Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.gdy_file_key), Context.MODE_PRIVATE);
+        int num_player = sharedPref.getInt(getString(R.string.num_player), -1);
+        if (num_player == -1) {
+            throw new IllegalStateException("number of player can not be negative, sharedPreference might be broken.");
+        }
 
-        Button startButton = (Button) findViewById(R.id.startButton);
-        Button resumeButton = (Button) findViewById(R.id.resumeButton);
-        final Intent intent = new Intent(this, GameSettingActivity.class);
-
-        startButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(intent);
-            }
-        });
+        TextView test = (TextView) findViewById(R.id.test_tv);
+        test.setText("There are " + num_player + " players.");
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_player_setting, menu);
         return true;
     }
 

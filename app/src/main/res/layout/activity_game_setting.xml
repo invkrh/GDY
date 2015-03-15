@@ -63,7 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="100dp"
             android:text="@string/next"
-            android:id="@+id/go_to_player_settings_btn" />
+            android:id="@+id/goto_player_settings_btn" />
     </LinearLayout>
 
     <LinearLayout
@@ -81,7 +81,7 @@
             android:text="@string/init_points" />
 
         <NumberPicker
-            android:id="@+id/np_init_point"
+            android:id="@+id/init_point_np"
             android:layout_marginTop="40dp"
             android:layout_gravity="center_horizontal"
             android:descendantFocusability="blocksDescendants"
