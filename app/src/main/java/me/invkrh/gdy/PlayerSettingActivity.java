@@ -1,15 +1,24 @@
 package me.invkrh.gdy;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.ActionBarActivity;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
 public class PlayerSettingActivity extends ActionBarActivity {
+
+    private final static int[] PLAYER_COLOR =
+            {Color.BLACK, Color.BLUE, Color.RED, Color.CYAN, Color.YELLOW, Color.MAGENTA};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,10 +31,25 @@ public class PlayerSettingActivity extends ActionBarActivity {
             throw new IllegalStateException("number of player can not be negative, sharedPreference might be broken.");
         }
 
-        TextView test = (TextView) findViewById(R.id.test_tv);
-        test.setText("There are " + num_player + " players.");
-    }
+        LinearLayout playerListLayout = (LinearLayout) findViewById(R.id.play_list_layout);
 
+        for (int i = 1; i <= num_player; i++) {
+            View child = getLayoutInflater().inflate(R.layout.item_player, null);
+            ((TextView) child.findViewById(R.id.player_number_tv)).setText("Player " + i);
+            child.findViewById(R.id.player_color_tv).setBackgroundColor(PLAYER_COLOR[i - 1]);
+            ((EditText) child.findViewById(R.id.player_name_et)).setText("");
+            playerListLayout.addView(child);
+        }
+
+        Button startButton = (Button) findViewById(R.id.start_btn);
+        final Intent intent = new Intent(this, PlayerSettingActivity.class);
+        startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(intent);
+            }
+        });
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

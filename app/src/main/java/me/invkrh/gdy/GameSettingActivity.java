@@ -57,9 +57,9 @@ public class GameSettingActivity extends ActionBarActivity {
         setNumberPicker(R.id.max_point_np, max_points, maxValueArr);
         setNumberPicker(R.id.init_point_np, init_points, initValueArr);
 
-        Button startButton = (Button) findViewById(R.id.goto_player_settings_btn);
+        Button nextButton = (Button) findViewById(R.id.goto_player_settings_btn);
         final Intent intent = new Intent(this, PlayerSettingActivity.class);
-        startButton.setOnClickListener(new View.OnClickListener() {
+        nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // save settings

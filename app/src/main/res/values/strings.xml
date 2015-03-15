@@ -5,6 +5,7 @@
 
     <string name="greeting">Welcome to GDY</string>
     <string name="next">NEXT</string>
+    <string name="start">START</string>
 
     <string name="new_game">Start a new game</string>
     <string name="resume_game">Resume an old game</string>
