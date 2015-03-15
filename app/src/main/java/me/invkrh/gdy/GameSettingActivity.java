@@ -43,13 +43,7 @@ public class GameSettingActivity extends ActionBarActivity {
 
         Button startButton = (Button) findViewById(R.id.go_to_player_settings_btn);
         final Intent intent = new Intent(this, GameSettingActivity.class);
-
-        startButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(intent);
-            }
-        });
+        startButton.setOnClickListener(v -> startActivity(intent));
     }
 
     @Override
