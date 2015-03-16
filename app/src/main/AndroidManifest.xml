@@ -24,6 +24,10 @@
             android:name=".PlayerSettingActivity"
             android:label="@string/title_activity_player_setting" >
         </activity>
+        <activity
+            android:name=".ChooseWinnerActivity"
+            android:label="@string/title_activity_winner" >
+        </activity>
     </application>
 
 </manifest>

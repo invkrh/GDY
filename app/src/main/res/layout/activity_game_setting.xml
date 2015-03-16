@@ -30,7 +30,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="80dp"
-                android:text="@string/num_player" />
+                android:text="@string/num_player"
+                android:textSize="30sp" />
 
             <NumberPicker
                 android:id="@+id/num_player_np"
@@ -53,7 +54,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="80dp"
-                android:text="@string/max_points" />
+                android:text="@string/max_points"
+                android:textSize="30sp" />
 
             <NumberPicker
                 android:id="@+id/max_point_np"
@@ -76,7 +78,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="80dp"
-                android:text="@string/init_points" />
+                android:text="@string/init_points"
+                android:textSize="30sp" />
 
             <NumberPicker
                 android:id="@+id/init_point_np"
@@ -92,7 +95,7 @@
         android:id="@+id/goto_player_settings_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginBottom="50dp"
         android:text="@string/next" />
 
 </LinearLayout>
