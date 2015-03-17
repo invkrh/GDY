@@ -3,9 +3,8 @@ package me.invkrh.gdy;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +12,8 @@ import android.widget.Button;
 import android.widget.NumberPicker;
 
 import java.util.Arrays;
+
+import me.invkrh.gdy.common.Utils;
 
 public class GameSettingActivity extends ActionBarActivity {
 
@@ -28,7 +29,7 @@ public class GameSettingActivity extends ActionBarActivity {
         return Integer.parseInt(valArr[valIdx]);
     }
 
-    private void setNumberPicker(int id, int  value, String[] displayedValues) {
+    private void setNumberPicker(int id, int value, String[] displayedValues) {
         int valueIdx = Arrays.asList(displayedValues).indexOf(Integer.toString(value));
         int min = 0;
         int max = displayedValues.length - 1;
@@ -63,11 +64,10 @@ public class GameSettingActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 // save settings
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putInt(getString(R.string.num_player), getNumberPickerValue(R.id.num_player_np));
-                editor.putInt(getString(R.string.max_points), getNumberPickerValue(R.id.max_point_np));
-                editor.putInt(getString(R.string.init_points), getNumberPickerValue(R.id.init_point_np));
-                editor.apply();
+                Utils.persistSettings(GameSettingActivity.this,
+                        getNumberPickerValue(R.id.num_player_np),
+                        getNumberPickerValue(R.id.max_point_np),
+                        getNumberPickerValue(R.id.init_point_np));
                 startActivity(intent);
             }
         });

@@ -37,17 +37,17 @@ public class PlayerAdapter extends ArrayAdapter<Player> {
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.detailed_player_item, parent, false);
-            viewHolder.name = (TextView) convertView.findViewById(R.id.player_name_tv);
-            viewHolder.color = (TextView) convertView.findViewById(R.id.player_color_tv);
-            viewHolder.points = (TextView) convertView.findViewById(R.id.player_points_tv);
+            viewHolder.name = (TextView) convertView.findViewById(R.id.player_name);
+            viewHolder.color = (TextView) convertView.findViewById(R.id.player_color);
+            viewHolder.points = (TextView) convertView.findViewById(R.id.player_points);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         // Populate the data into the template view using the data object
         viewHolder.name.setText(player.name);
-        viewHolder.color.setText(player.color);
-        viewHolder.points.setText(player.points);
+        viewHolder.color.setBackgroundColor(player.color);
+        viewHolder.points.setText(player.points + "");
         // Return the completed view to render on screen
         return convertView;
     }

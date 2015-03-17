@@ -19,14 +19,9 @@
 
     <ListView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        android:id="@+id/listView" />
-
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
+        android:dividerHeight="3dp"
         android:id="@+id/player_list_lv" />
 
 

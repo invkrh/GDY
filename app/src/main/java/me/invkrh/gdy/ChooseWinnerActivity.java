@@ -4,7 +4,10 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -19,17 +22,20 @@ public class ChooseWinnerActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_winner);
-        int num_player = Utils.getPlayerNumber(this);
-
         // Construct the data source
-        ArrayList<Player> arrayOfUsers = new ArrayList<Player>();
+        ArrayList<Player> playerList = Utils.restoreAllPlayers(this);
         // Create the adapter to convert the array to views
-        PlayerAdapter adapter = new PlayerAdapter(this, arrayOfUsers);
+        PlayerAdapter adapter = new PlayerAdapter(this, playerList);
         // Attach the adapter to a ListView
         ListView listView = (ListView) findViewById(R.id.player_list_lv);
-
-
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //TODO: pass winner id
+                Toast.makeText(ChooseWinnerActivity.this, id + "/" + position, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 
