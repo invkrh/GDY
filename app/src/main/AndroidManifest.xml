@@ -28,6 +28,10 @@
             android:name=".ChooseWinnerActivity"
             android:label="@string/title_activity_winner" >
         </activity>
+        <activity
+            android:name=".ScoringActivity"
+            android:label="@string/title_activity_scoring" >
+        </activity>
     </application>
 
 </manifest>

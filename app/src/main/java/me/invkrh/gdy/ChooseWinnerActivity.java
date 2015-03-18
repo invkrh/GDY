@@ -1,5 +1,6 @@
 package me.invkrh.gdy;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -7,7 +8,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -29,15 +29,17 @@ public class ChooseWinnerActivity extends ActionBarActivity {
         // Attach the adapter to a ListView
         ListView listView = (ListView) findViewById(R.id.player_list_lv);
         listView.setAdapter(adapter);
+
+        final Intent intent = new Intent(this, ScoringActivity.class);
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //TODO: pass winner id
-                Toast.makeText(ChooseWinnerActivity.this, id + "/" + position, Toast.LENGTH_SHORT).show();
+                intent.putExtra("winner", id + 1);
+                startActivity(intent);
             }
         });
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -17,8 +17,10 @@
 
     <string name="gdy_file_key">gdy</string>
     <string name="title_activity_player_setting">Player Settings</string>
-    <string name="title_activity_winner">WinnerActivity</string>
+    <string name="title_activity_winner">Winner</string>
 
     <string name="winner">The winner of this round is ?</string>
+    <string name="title_activity_scoring">Score</string>
+
 
 </resources>
