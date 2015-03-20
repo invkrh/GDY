@@ -1,9 +1,15 @@
 package me.invkrh.gdy;
 
+import android.annotation.TargetApi;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
@@ -18,6 +24,26 @@ public class ScoringActivity extends ActionBarActivity {
             throw new IllegalStateException("Winner id can not be negative.");
         }
         ((TextView) findViewById(R.id.status)).setText("Winner is " + winnerId);
+
+        final LinearLayout p1 = (LinearLayout) findViewById(R.id.player1);
+        p1.setOnClickListener(new View.OnClickListener() {
+            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onClick(View v) {
+                Drawable d = getDrawable(R.drawable.abc_list_selector_disabled_holo_dark);
+                p1.setBackground(d);
+            }
+        });
+
+        final LinearLayout p2 = (LinearLayout) findViewById(R.id.player2);
+        p2.setOnClickListener(new View.OnClickListener() {
+            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onClick(View v) {
+                Drawable d = getDrawable(R.drawable.abc_list_selector_disabled_holo_dark);
+                p2.setBackground(d);
+            }
+        });
     }
 
 
