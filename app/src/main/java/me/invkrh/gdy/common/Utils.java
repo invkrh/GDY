@@ -1,92 +1,42 @@
 package me.invkrh.gdy.common;
 
+import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
+import android.widget.NumberPicker;
 
-import com.google.gson.Gson;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import me.invkrh.gdy.R;
-import me.invkrh.gdy.model.Player;
+import java.util.Arrays;
 
 /**
- * Created by invkrh on 2015/3/16.
+ * Created by invkrh on 2015/3/20.
  */
 
 public class Utils {
-    private static SharedPreferences getSharedPref(Context ctx) {
-        String fileKey = ctx.getString(R.string.gdy_file_key);
-        return ctx.getSharedPreferences(fileKey, Context.MODE_PRIVATE);
-    }
-
-    public static void persistPlayer(Context ctx, Player player) {
-        SharedPreferences.Editor editor = getSharedPref(ctx).edit();
-        editor.putString(player.number + "", new Gson().toJson(player));
-        editor.apply();
-    }
-
-    public static Player restorePlayer(Context ctx, int index) {
-        String playerStr = getSharedPref(ctx).getString(index + "", "");
-        Player retVal = null;
-        if (!playerStr.equals("")) {
-            retVal = new Gson().fromJson(playerStr, Player.class);
+    public static int safeLongToInt(long l) {
+        if (l < Integer.MIN_VALUE || l > Integer.MAX_VALUE) {
+            throw new IllegalArgumentException
+                    (l + " cannot be cast to int without changing its value.");
         }
-        return retVal;
+        return (int) l;
     }
 
-    public static String getPlayerNameById(Context ctx, int index) {
-        String playerStr = getSharedPref(ctx).getString(index + "", "");
-        String retVal = "";
-        if (!playerStr.equals("")) {
-            retVal = new Gson().fromJson(playerStr, Player.class).name;
-        }
-        return retVal;
+    public static int getNumberPickerValue(Activity ctx, int id) {
+        NumberPicker np = (NumberPicker) ctx.findViewById(id);
+        int valIdx = np.getValue();
+        String[] valArr = np.getDisplayedValues();
+        return Integer.parseInt(valArr[valIdx]);
     }
 
-    public static void persistAllPlayers(Context ctx, List<Player> playerList) {
-        SharedPreferences.Editor editor = getSharedPref(ctx).edit();
-        for (Player p : playerList) {
-            editor.putString(p.number + "", new Gson().toJson(p));
-        }
-        editor.apply();
-    }
+    public static NumberPicker setNumberPicker(Activity cnt, int id, int value, String[] displayedValues) {
+        int valueIdx = Arrays.asList(displayedValues).indexOf(Integer.toString(value));
+        int min = 0;
+        int max = displayedValues.length - 1;
 
-    public static ArrayList<Player> restoreAllPlayers(Context ctx) {
-        ArrayList<Player> playerList = new ArrayList<Player>();
-        SharedPreferences sharedPref = getSharedPref(ctx);
-        int player_num = restorePlayerNumber(ctx);
-        for (int i = 1; i <= player_num; i++) {
-            String playerStr = sharedPref.getString(i + "", "");
-            playerList.add(new Gson().fromJson(playerStr, Player.class));
-        }
-        return playerList;
-    }
-
-    public static void persistSettings(Context ctx, int num, int max, int init) {
-        SharedPreferences.Editor editor = getSharedPref(ctx).edit();
-        editor.putInt(ctx.getString(R.string.num_player), num)
-                .putInt(ctx.getString(R.string.max_points), max)
-                .putInt(ctx.getString(R.string.init_points), init);
-        editor.apply();
-    }
-
-    public static int restorePlayerNumber(Context ctx) {
-        String playerNumberKey = ctx.getString(R.string.num_player);
-        int num_player = getSharedPref(ctx).getInt(playerNumberKey, -1);
-        if (num_player == -1) {
-            throw new IllegalStateException("number of player can not be negative, sharedPreference might be broken.");
-        }
-        return num_player;
-    }
-
-    public static int restoreInitialPoints(Context ctx) {
-        String initPointsKey = ctx.getString(R.string.init_points);
-        int initPoints = getSharedPref(ctx).getInt(initPointsKey, -1);
-        if (initPoints == -1) {
-            throw new IllegalStateException("initial points can not be negative, sharedPreference might be broken.");
-        }
-        return initPoints;
+        NumberPicker np = (NumberPicker) cnt.findViewById(id);
+        np.setDisplayedValues(displayedValues);
+        np.setMinValue(min);
+        np.setMaxValue(max);
+        np.setValue(valueIdx);
+        np.setWrapSelectorWheel(true);
+        return np;
     }
 }

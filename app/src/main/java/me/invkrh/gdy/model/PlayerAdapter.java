@@ -1,6 +1,9 @@
 package me.invkrh.gdy.model;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,10 +26,14 @@ public class PlayerAdapter extends ArrayAdapter<Player> {
         TextView points;
     }
 
+    Context m_context;
+
     public PlayerAdapter(Context context, ArrayList<Player> players) {
         super(context, 0, players);
+        m_context = context;
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
@@ -48,6 +55,12 @@ public class PlayerAdapter extends ArrayAdapter<Player> {
         viewHolder.name.setText(player.name);
         viewHolder.color.setBackgroundColor(player.color);
         viewHolder.points.setText(player.points + "");
+        Drawable bg = convertView.getBackground();
+        if (player.isWinner) {
+            convertView.setBackground(m_context.getResources().getDrawable(R.drawable.abc_list_selector_disabled_holo_light));
+        } else {
+            convertView.setBackground(m_context.getResources().getDrawable(R.drawable.abc_list_selector_holo_light));
+        }
         // Return the completed view to render on screen
         return convertView;
     }

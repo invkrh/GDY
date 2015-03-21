@@ -11,6 +11,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
+import me.invkrh.gdy.common.DataModel;
 import me.invkrh.gdy.common.Utils;
 import me.invkrh.gdy.model.Player;
 import me.invkrh.gdy.model.PlayerAdapter;
@@ -23,9 +24,9 @@ public class ChooseWinnerActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_winner);
         // Construct the data source
-        ArrayList<Player> playerList = Utils.restoreAllPlayers(this);
+        ArrayList<Player> playerList = DataModel.restoreAllPlayers(this);
         // Create the adapter to convert the array to views
-        PlayerAdapter adapter = new PlayerAdapter(this, playerList);
+        final PlayerAdapter adapter = new PlayerAdapter(this, playerList);
         // Attach the adapter to a ListView
         ListView listView = (ListView) findViewById(R.id.player_list_lv);
         listView.setAdapter(adapter);

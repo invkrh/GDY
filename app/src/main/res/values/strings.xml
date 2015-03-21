@@ -22,5 +22,11 @@
     <string name="winner">The winner of this round is ?</string>
     <string name="title_activity_scoring">Score</string>
 
+    <string name="max">MAX</string>
+    <string name="commit">COMMIT</string>
+    <string name="next_round">NEXT ROUND</string>
+    <string name="or">OR</string>
+    <string name="multiple">X</string>
+
 
 </resources>

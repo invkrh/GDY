@@ -12,11 +12,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.gson.annotations.Until;
-
 import java.util.ArrayList;
 
-import me.invkrh.gdy.common.Utils;
+import me.invkrh.gdy.common.DataModel;
 import me.invkrh.gdy.model.Player;
 
 
@@ -30,15 +28,15 @@ public class PlayerSettingActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player_setting);
 
-        int num_player = Utils.restorePlayerNumber(this);
+        int num_player = DataModel.restorePlayerNumber(this);
         final LinearLayout playerListLayout = (LinearLayout) findViewById(R.id.player_list_layout);
 
         for (int i = 1; i <= num_player; i++) {
-            String name = Utils.getPlayerNameById(this, i);
+            Player p = DataModel.getPlayerById(this, i);
             View child = getLayoutInflater().inflate(R.layout.editable_player_item, null);
             ((TextView) child.findViewById(R.id.player_number_tv)).setText("Player " + i);
             child.findViewById(R.id.player_color_tv).setBackgroundColor(PLAYER_COLOR[i - 1]);
-            ((EditText) child.findViewById(R.id.player_name_et)).setText(name);
+            ((EditText) child.findViewById(R.id.player_name_et)).setText(p.name);
             playerListLayout.addView(child);
         }
 
@@ -48,14 +46,14 @@ public class PlayerSettingActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 PlayerSettingActivity self = PlayerSettingActivity.this;
-                int player_num = Utils.restorePlayerNumber(self);
-                int init_points = Utils.restoreInitialPoints(self);
+                int player_num = DataModel.restorePlayerNumber(self);
+                int init_points = DataModel.restoreInitialPoints(self);
                 ArrayList<Player> playerList = new ArrayList<Player>();
                 for (int i = 1; i <= player_num; i++) {
                     String name = ((EditText) playerListLayout.getChildAt(i - 1).findViewById(R.id.player_name_et)).getText().toString();
                     playerList.add(new Player(i, PLAYER_COLOR[i - 1], name, init_points));
                 }
-                Utils.persistAllPlayers(self, playerList);
+                DataModel.persistAllPlayers(self, playerList);
                 startActivity(intent);
             }
         });
