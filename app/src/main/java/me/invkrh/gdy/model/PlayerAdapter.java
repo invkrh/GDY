@@ -64,11 +64,17 @@ public class PlayerAdapter extends ArrayAdapter<Player> {
         viewHolder.points.setText(player.points + "");
         Drawable bg = convertView.getBackground();
         if (player.isWinner) {
-            viewHolder.name.setText('\u265A' + "\u2192 " + player.name);
+            viewHolder.name.setText("\u265A \u2192" + player.name);
             showHighlightItem(convertView);
         } else {
-            viewHolder.name.setText(player.name);
-            if (player.isInProcess)
+
+            if (player.isProcessed) {
+                viewHolder.name.setText("\u221A \u2192 " + player.name);
+            } else {
+                viewHolder.name.setText(player.name);
+            }
+
+            if (player.isSelected)
                 showHighlightItem(convertView);
             else
                 hideHighlightItem(convertView);

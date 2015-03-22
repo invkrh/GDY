@@ -18,10 +18,11 @@ public class Transaction {
     }
 
     public void commit() {
-        if (from.points > payment) {
-            from.points -= payment;
-            to.points += payment;
-            pointChanged = true;
+        if (from.points != 0) {
+            int amount = java.lang.Math.min(from.points, payment);
+            from.points -= amount;
+            to.points += amount;
+            this.pointChanged = true;
         }
     }
 

@@ -1,6 +1,7 @@
 package me.invkrh.gdy;
 
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -31,6 +32,8 @@ public class ScoringActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scoring);
 
+        final int max = DataModel.restoreMaxPoint(ScoringActivity.this);
+
         // Construct the data source
         final ArrayList<Player> playerList = DataModel.restoreAllPlayers(this);
         final Transaction[] transactionHistory = new Transaction[playerList.size()];
@@ -59,11 +62,17 @@ public class ScoringActivity extends ActionBarActivity {
         final CheckBox max_cb = (CheckBox) findViewById(R.id.checkBox);
 
         // get commit button
-        Button commitBtn = (Button) findViewById(R.id.commit_button);
+        final Button commitBtn = (Button) findViewById(R.id.commit_button);
 
         // get rollback button
         final Button rollbackBtn = (Button) findViewById(R.id.rollback_btn);
         rollbackBtn.setEnabled(false);
+
+        // get next round button
+        final Button nextRoundBtn = (Button) findViewById(R.id.next_round_button);
+
+        // calculator layout
+        final LinearLayout calculatorLayout = (LinearLayout ) findViewById(R.id.calculator);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -73,26 +82,36 @@ public class ScoringActivity extends ActionBarActivity {
                 Player currentClickedPlayer = playerList.get(position);
                 if (!currentClickedPlayer.isWinner) {
                     Player previousClickedPlayer = null;
+
                     for (Player p : playerList) {
-                        if (p.isInProcess) {
+                        if (p.isSelected) {
                             previousClickedPlayer = p;
-                            previousClickedPlayer.isInProcess = false;
+                            previousClickedPlayer.isSelected = false;
                         }
                     }
 
-                    // show console bar if no player is in process or if clicked on a new player
+                    // show console bar if no player is selected or if clicked on a new player
                     if (previousClickedPlayer == null || previousClickedPlayer != currentClickedPlayer) {
-                        currentClickedPlayer.isInProcess = true;
-                        consoleBar.setVisibility(LinearLayout.VISIBLE);
+                        currentClickedPlayer.isSelected = true;
                         // setEnable based on if corresponding transaction exists
                         if (transactionHistory[position] == null) {
+                            commitBtn.setEnabled(true);
                             rollbackBtn.setEnabled(false);
                         } else {
+                            commitBtn.setEnabled(false);
                             rollbackBtn.setEnabled(true);
                         }
-                    } else {
-                        //consoleBar.setVisibility(LinearLayout.INVISIBLE);
+                        consoleBar.setVisibility(LinearLayout.VISIBLE);
+                    } else { // click on winner or selected player
+                        consoleBar.setVisibility(LinearLayout.INVISIBLE);
                     }
+
+                    if(commitBtn.isEnabled()) {
+                        calculatorLayout.setVisibility(LinearLayout.VISIBLE);
+                    } else {
+                        calculatorLayout.setVisibility(LinearLayout.INVISIBLE);
+                    }
+
                     adapter.notifyDataSetChanged();
                 }
             }
@@ -128,17 +147,24 @@ public class ScoringActivity extends ActionBarActivity {
                 Player loser = null;
                 Player winner = null;
 
-                // TODO: get points to pay
-                int payment = 0;
+                // get payment
+                int payment;
+                if (max_cb.isChecked()) {
+                    payment = max;
+                } else {
+                    int nbCard = Utils.getNumberPickerValue(ScoringActivity.this, R.id.card_np);
+                    int multiple = Utils.getNumberPickerValue(ScoringActivity.this, R.id.multiple_np);
+                    payment =java.lang.Math.min(nbCard * multiple, max);
+                }
 
                 // once clicked, hide console bar
-                // consoleBar.setVisibility(LinearLayout.INVISIBLE);
+                consoleBar.setVisibility(LinearLayout.INVISIBLE);
 
                 for (Player p : playerList) {
                     if (p.isWinner) {
                         winner = p;
-                    } else if (p.isInProcess) {
-                        p.isInProcess = false;
+                    } else if (p.isSelected) {
+                        p.isSelected = false;
                         loser = p;
                     }
                 }
@@ -148,6 +174,26 @@ public class ScoringActivity extends ActionBarActivity {
                 t.commit();
                 assert loser != null;
                 transactionHistory[loser.number - 1] = t;
+
+                // show or hide next round based on if all transactions are done
+                boolean isDone = true;
+                for (Player p : playerList) {
+                    assert winner != null;
+                    if (p.number != winner.number) {
+                        if(transactionHistory[p.number - 1] == null) {
+                            isDone = false;
+                            break;
+                        }
+                    }
+                }
+
+                if (isDone) {
+                    nextRoundBtn.setEnabled(true);
+                } else {
+                    nextRoundBtn.setEnabled(false);
+                }
+
+                loser.isProcessed = true;
 
                 // make multiple part appear
                 max_cb.setChecked(false);
@@ -161,16 +207,39 @@ public class ScoringActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 for (Player p : playerList) {
-                    if (p.isInProcess) {
+                    if (p.isSelected) {
                         transactionHistory[p.number - 1].rollback();
                         transactionHistory[p.number - 1] = null;
+                        p.isProcessed = false;
                         break;
                     }
                 }
                 // make multiple part appear
                 max_cb.setChecked(false);
+
+                // toggle button
                 rollbackBtn.setEnabled(false);
+                commitBtn.setEnabled(true);
+                nextRoundBtn.setEnabled(false);
+                calculatorLayout.setVisibility(LinearLayout.VISIBLE);
+
+                // show toast
                 Toast.makeText(ScoringActivity.this, R.string.rollback_toast, Toast.LENGTH_SHORT).show();
+
+                // update list view
+                adapter.notifyDataSetChanged();
+            }
+        });
+
+        final Intent intent = new Intent(getApplicationContext(), ChooseWinnerActivity.class);
+        nextRoundBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for (Player p : playerList) {
+                    p.resetUI();
+                }
+                DataModel.persistAllPlayers(ScoringActivity.this, playerList);
+                startActivity(intent);
             }
         });
     }

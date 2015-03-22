@@ -2,9 +2,8 @@ package me.invkrh.gdy;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,8 +17,7 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        this.getSharedPreferences(
-                getString(R.string.gdy_file_key), Context.MODE_PRIVATE);
+        this.getSharedPreferences(getString(R.string.gdy_file_key), Context.MODE_PRIVATE);
 
         Button startButton = (Button) findViewById(R.id.startButton);
         Button resumeButton = (Button) findViewById(R.id.resumeButton);
@@ -31,6 +29,8 @@ public class MainActivity extends ActionBarActivity {
                 startActivity(intent);
             }
         });
+
+        // TODO: add resume button listener
     }
 
     @Override

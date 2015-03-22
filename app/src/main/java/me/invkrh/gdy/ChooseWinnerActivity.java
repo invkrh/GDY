@@ -31,7 +31,7 @@ public class ChooseWinnerActivity extends ActionBarActivity {
         ListView listView = (ListView) findViewById(R.id.player_list_lv);
         listView.setAdapter(adapter);
 
-        final Intent intent = new Intent(this, ScoringActivity.class);
+        final Intent intent = new Intent(getApplicationContext(), ScoringActivity.class);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
