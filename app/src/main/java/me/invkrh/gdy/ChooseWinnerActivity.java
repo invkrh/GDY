@@ -36,7 +36,7 @@ public class ChooseWinnerActivity extends ActionBarActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                intent.putExtra("winner", id + 1);
+                intent.putExtra("winner", position + 1);
                 startActivity(intent);
             }
         });

@@ -26,11 +26,18 @@ public class PlayerAdapter extends ArrayAdapter<Player> {
         TextView points;
     }
 
-    Context m_context;
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    private void showHighlightItem(View itemView) {
+        itemView.setBackground(this.getContext().getResources().getDrawable(R.drawable.abc_list_selector_disabled_holo_light));
+    }
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    private void hideHighlightItem(View itemView) {
+        itemView.setBackground(this.getContext().getResources().getDrawable(R.drawable.abc_list_selector_holo_light));
+    }
 
     public PlayerAdapter(Context context, ArrayList<Player> players) {
         super(context, 0, players);
-        m_context = context;
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -51,16 +58,22 @@ public class PlayerAdapter extends ArrayAdapter<Player> {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
+
         // Populate the data into the template view using the data object
-        viewHolder.name.setText(player.name);
         viewHolder.color.setBackgroundColor(player.color);
         viewHolder.points.setText(player.points + "");
         Drawable bg = convertView.getBackground();
         if (player.isWinner) {
-            convertView.setBackground(m_context.getResources().getDrawable(R.drawable.abc_list_selector_disabled_holo_light));
+            viewHolder.name.setText('\u265A' + "\u2192 " + player.name);
+            showHighlightItem(convertView);
         } else {
-            convertView.setBackground(m_context.getResources().getDrawable(R.drawable.abc_list_selector_holo_light));
+            viewHolder.name.setText(player.name);
+            if (player.isInProcess)
+                showHighlightItem(convertView);
+            else
+                hideHighlightItem(convertView);
         }
+
         // Return the completed view to render on screen
         return convertView;
     }

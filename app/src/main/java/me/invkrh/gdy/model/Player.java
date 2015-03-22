@@ -16,7 +16,7 @@ public class Player {
     public String name = "";
     public int points = 0;
     public boolean isWinner = false;
-    public boolean isProcessing = false;
+    public boolean isInProcess = false;
 
     public Player(int p_number, int p_color, String p_name, int p_points) {
         number = p_number;

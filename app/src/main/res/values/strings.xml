@@ -27,6 +27,9 @@
     <string name="next_round">NEXT ROUND</string>
     <string name="or">OR</string>
     <string name="multiple">X</string>
+    <string name="cancel">CANCEL</string>
+    <string name="rollback">ROLLBACK</string>
 
+    <string name="rollback_toast">RollBack is done.</string>
 
 </resources>
