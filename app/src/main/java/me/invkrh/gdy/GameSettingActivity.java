@@ -23,8 +23,6 @@ public class GameSettingActivity extends ActionBarActivity {
     private static String[] maxValueArr = {"20", "30", "40", "50"};
     private static String[] initValueArr = {"50", "60", "70", "80", "90", "100"};
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

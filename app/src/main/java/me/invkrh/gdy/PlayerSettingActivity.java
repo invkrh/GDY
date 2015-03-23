@@ -32,11 +32,10 @@ public class PlayerSettingActivity extends ActionBarActivity {
         final LinearLayout playerListLayout = (LinearLayout) findViewById(R.id.player_list_layout);
 
         for (int i = 1; i <= num_player; i++) {
-            Player p = DataModel.getPlayerById(this, i);
             View child = getLayoutInflater().inflate(R.layout.editable_player_item, null);
             ((TextView) child.findViewById(R.id.player_number_tv)).setText("Player " + i);
             child.findViewById(R.id.player_color_tv).setBackgroundColor(PLAYER_COLOR[i - 1]);
-            ((EditText) child.findViewById(R.id.player_name_et)).setText(p.name);
+            ((EditText) child.findViewById(R.id.player_name_et)).setText("");
             playerListLayout.addView(child);
         }
 

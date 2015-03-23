@@ -16,7 +16,7 @@ import me.invkrh.gdy.model.Player;
  */
 
 public class DataModel {
-    private static SharedPreferences getSharedPref(Context ctx) {
+    public static SharedPreferences getSharedPref(Context ctx) {
         String fileKey = ctx.getString(R.string.gdy_file_key);
         return ctx.getSharedPreferences(fileKey, Context.MODE_PRIVATE);
     }
@@ -30,22 +30,20 @@ public class DataModel {
     public static Player getPlayerById(Context ctx, int index) {
         String playerStr = getSharedPref(ctx).getString(index + "", "");
         Player retVal = null;
-        if (playerStr.equals("")) {
-            throw new IllegalStateException("Can not retrieve player " + index);
-        } else {
+        if (!playerStr.equals("")) {
             retVal = new Gson().fromJson(playerStr, Player.class);
         }
         return retVal;
     }
 
-//    public static String getPlayerNameById(Context ctx, int index) {
-//        String playerStr = getSharedPref(ctx).getString(index + "", "");
-//        String retVal = "";
-//        if (!playerStr.equals("")) {
-//            retVal = new Gson().fromJson(playerStr, Player.class).name;
-//        }
-//        return retVal;
-//    }
+    public static String getPlayerNameById(Context ctx, int index) {
+        String playerStr = getSharedPref(ctx).getString(index + "", "");
+        String retVal = "";
+        if (!playerStr.equals("")) {
+            retVal = new Gson().fromJson(playerStr, Player.class).name;
+        }
+        return retVal;
+    }
 
     public static void persistAllPlayers(Context ctx, List<Player> playerList) {
         SharedPreferences.Editor editor = getSharedPref(ctx).edit();

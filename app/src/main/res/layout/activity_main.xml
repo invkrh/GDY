@@ -16,24 +16,10 @@
         android:textSize="60sp" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:height="60dp"
-        android:width="300dp"
         android:text="@string/new_game"
         android:id="@+id/startButton"
-        android:layout_marginTop="80dp"
-        android:layout_below="@+id/textView"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerInParent="true" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:height="60dp"
-        android:width="300dp"
-        android:text="@string/resume_game"
-        android:id="@+id/resumeButton"
-        android:layout_marginTop="60dp"
-        android:layout_below="@+id/startButton"
-        android:layout_centerHorizontal="true" />
 </RelativeLayout>

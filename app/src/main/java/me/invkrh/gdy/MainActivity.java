@@ -9,6 +9,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import me.invkrh.gdy.common.DataModel;
+
 
 public class MainActivity extends ActionBarActivity {
 
@@ -20,17 +22,18 @@ public class MainActivity extends ActionBarActivity {
         this.getSharedPreferences(getString(R.string.gdy_file_key), Context.MODE_PRIVATE);
 
         Button startButton = (Button) findViewById(R.id.startButton);
-        Button resumeButton = (Button) findViewById(R.id.resumeButton);
         final Intent intent = new Intent(this, GameSettingActivity.class);
 
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                DataModel.getSharedPref(MainActivity.this)
+                        .edit()
+                        .clear()
+                        .commit();
                 startActivity(intent);
             }
         });
-
-        // TODO: add resume button listener
     }
 
     @Override
