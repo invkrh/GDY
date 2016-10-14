@@ -1,4 +1,4 @@
 # GDY
-A GDY game counter
+A “Gan Deng Yan" game counter
 
 It makes point counting much easier when no chip is by hand.
